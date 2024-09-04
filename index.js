@@ -12,12 +12,12 @@ const PORT = process.env.PORT;
 
 app.use(express.json());
 
-app.use(express.static("dist"));
+// app.use(express.static("dist"));
 
 // Habilitar CORS
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: "*",
     credentials: true,
   })
 );
@@ -27,6 +27,12 @@ mongoose
 
   .then((db) => console.log("DB is connected"))
   .catch((err) => console.log(err));
+
+app.get("/favicon.ico", (req, res) => res.status(204));
+
+app.get("/", (req, res) => {
+  res.send("Welcome to the API");
+});
 
 app.get("/api", (req, res) => {
   UserModel.find()
